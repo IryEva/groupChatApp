@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <title>Register</title>
+    <style>
+        input[type="email"], input[type="password"] {
+            border: 1px solid #ccc;
+            background-color: hsl(0, 0%, 100%);
+            padding: 8px;
+            margin-bottom: 10px;
+            margin : auto;
+        }
+        form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            
+         
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container d-flex justify-content-center align-items-center h-100">
+            <div class="card">
+                <div class="card-body">
+                    <form id="login-form" onsubmit="signup()" >
+                        <p class="text-center">Existing User? <a href="../groupChatApp/FrontEnd/login.html" id="login-link">Login</a></p>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="name" name="name" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone no</label>
+                            <input type="number" name="phone" id="phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark" id = 'submit'>Sign Up</button>
+                    </form>
+            
+                </div>
+            </div>
+        </div>
+    
+    <ul id="items" class="list-group" >
+    </ul>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
+    <script src="./signUp.js"></script>
+    </body>
+    </html>
