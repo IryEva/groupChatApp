@@ -10,27 +10,6 @@ const bcrypt = require('bcrypt');
      }
  }
 
-
-//  const signup = async (req,res) => {      
-//      try{
-//          const { name, email , password ,phonenumber} = req.body;
-//          console.log(name);
-//          console.log('****',email)
-//          if(isstringinvalid(name) || isstringinvalid(email) || isstringinvalid(password) ||  isstringinvalid(phonenumber)){
-//              return res.status(400).json({err: "Bad params . something is missing"})
-//          }
-//          const saltrounds = 10;
-//          bcrypt.hash(password, saltrounds, async (err,hash) => {
-//             await User.create( { name,email,password: hash,phonenumber})
-//             res.status(201).json({message: 'Succesfully done'})
-//          })
-        
-//      } catch(err) {
-//         console.log(err);
-//          res.status(500).json(err);
-
-//      }
-//  }
 const signup = async(req, res) => {
     try {
         console.log(req.body);
@@ -59,6 +38,37 @@ const signup = async(req, res) => {
     }
 }
  
-module.exports = {
-    signup
+const login = async (req,res) => {
+    try {
+        const { email,password } = req.body ;
+        console.log(email);
+        if( isStringInvalid(email) || isStringInvalid(password)){
+            return res.status(400).json({err: "Bad params . something is missing"})
+        }
+        const user = await User.findAll({where : { email }})
+        if(user.length > 0) {
+            bcrypt.compare(password,user[0].password, (err,result) => {
+                if(err){
+                    throw new Error('something went wrong')
+                }
+                if(result === true){
+                    return res.status(200).json({ success: true, message: "User Logged in Successfully", user: user})
+                } else {
+                    return res.status(400).json({ success:false, message: "Password is incorrect"})
+                }
+            })
+            
+        } else {
+            return res.status(404).json({success: false, message:"User doesn't exist"})
+        }
+    } catch(err) {
+        res.status(500).json({message:err , success:false})
+
+    }
 }
+
+module.exports = {
+    signup,
+    login
+}
+

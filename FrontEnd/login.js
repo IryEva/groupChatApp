@@ -17,11 +17,11 @@ async function login(e) {
 
     }
     console.log(loginDetails)
-    const response = await axios.post("http://localhost:4000/user/login",loginDetails)
+    const response = await axios.post("http://localhost:3000/user/login",loginDetails)
     if(response.status === 200) {
       alert(response.data.message)
       localStorage.setItem('token',response.data.token)
-      window.location.href = "../groupChatApp/FrontEnd/groupChat.html";
+      window.location.href = "../FrontEnd/groupChat.html";
 
       } else {
           throw new Error(response.data.message)
