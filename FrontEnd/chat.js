@@ -16,3 +16,29 @@ function sendMessage(event) {
         console.log(err);
       });
   }
+
+  document.addEventListener("DOMContentLoaded", async() => {
+    try{
+      const token = localStorage.getItem("token")
+      const response = await axios.get("http://localhost:3000/user/getmessage",{ headers: { Authorization: token } })
+      if(response.status == 201){
+        for(let i=0; i<response.data.message.length;i++){
+          showOnChatBox(response.data.message[i].username, response.data.message[i].message)
+      }
+      }
+
+    }catch(err){
+      console.log(err);
+
+    }
+  })
+
+  function showOnChatBox(username,message){
+    const parentnode = document.getElementById("output")
+    const childnode = `<p>${username}:${message}</p>`
+    parentnode.innerHTML += childnode;
+
+    const messages = JSON.parse(localStorage.getItem("messages")) || [];
+    messages.push({ username, message });
+    localStorage.setItem("messages", JSON.stringify(messages));
+  }
