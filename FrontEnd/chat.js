@@ -31,7 +31,30 @@ function sendMessage(event) {
       console.log(err);
 
     }
-  })
+  
+
+  setInterval(async() => {
+    try{
+    const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:3000/user/getmessage", {
+        headers: { Authorization: token },
+      });
+      if (response.status == 201) {
+        document.getElementById("output").innerHTML = "";
+        // Display the new messages
+        for (let i = 0; i < response.data.message.length; i++) {
+          showOnChatBox(
+            response.data.message[i].username,
+            response.data.message[i].message
+          );
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+  }, 1000);
+  });
 
   function showOnChatBox(username,message){
     const parentnode = document.getElementById("output")
