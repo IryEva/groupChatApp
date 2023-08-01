@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+
+  #chat-window {
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+
+  #output {
+    height: 200px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  #chat-input {
+    width: 88%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+
+  #send {
+    width: 10%;
+    padding: 10px;
+    border: none;
+    background-color: darkgreen;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .chat-header {
+    background-color: darkgreen;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+  }

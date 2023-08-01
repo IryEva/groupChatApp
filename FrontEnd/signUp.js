@@ -10,7 +10,7 @@ async function signup() {
          email: event.target.email.value,
          password: event.target.password.value, 
          phonenumber: event.target.phonenumber.value
- 
+         
         } 
     
       console.log(signupDetails)

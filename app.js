@@ -23,9 +23,6 @@ const userRoutes = require('./BackEnd/routes/user');
 //const User = require('./models/user');
 
 app.use('/user', userRoutes);
-//app.use(bodyParser.json()); // for parsing application/json
-//app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(bodyParser.json({ extended: false }));
 app.use(express.json());
 //app.use(express.static(path.join(__dirname, 'public'))); 
 

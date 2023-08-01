@@ -21,7 +21,7 @@ async function login(e) {
     if(response.status === 200) {
       alert(response.data.message)
       localStorage.setItem('token',response.data.token)
-      window.location.href = "../FrontEnd/groupChat.html";
+      window.location.href = "../FrontEnd/chat.html";
 
       } else {
           throw new Error(response.data.message)

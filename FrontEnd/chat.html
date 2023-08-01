@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="chat-box">
+		<div class="chat-header">
+			<h2>Group Chat</h2>
+		</div>
+		<div class="chat-box"></div>
+		<div class="chat-form">
+            <div id="output"></div>
+			<input class="chat-input" type="text" id="chat-input" placeholder="Type your message here...">
+			<button id="send" onclick="sendMessage(event)">Send</button>
+		</div>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="chat.js"></script>
+</body>
+</html>
