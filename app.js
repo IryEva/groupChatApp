@@ -20,9 +20,11 @@ const sequelize = require('./BackEnd/util/database');
 
 
 const userRoutes = require('./BackEnd/routes/user'); 
+const msgRoutes = require('./BackEnd/routes/message');
 //const User = require('./models/user');
 
 app.use('/user', userRoutes);
+app.use('/user',msgRoutes);
 app.use(express.json());
 //app.use(express.static(path.join(__dirname, 'public'))); 
 
