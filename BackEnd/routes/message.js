@@ -5,9 +5,9 @@ const auth=require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/message',auth.authenticate,messageController.chat);
+router.post('/message',auth.authenticate,messageController.postMessage);
 
-router.get('/getmessage',auth.authenticate,messageController.getchat);
+router.get('/get-message/:groupId',messageController.getMessage);
 
 
 
