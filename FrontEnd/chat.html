@@ -1,25 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.js" 
+    integrity="sha512-VJ6+sp2E5rFQk05caiXXzQd1wBABpjEj1r5kMiLmGAAgwPItw1YpqsCCBtq8Yr1x6C49/mTpRdXtq8O2RcZhlQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+	<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
     <link rel="stylesheet" type="text/css" href="style.css">
+	<!-- Add these lines in the head section of your HTML -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-    <div class="chat-box">
-		<div class="chat-header">
-			<h2>Group Chat</h2>
-		</div>
-		<div class="chat-box"></div>
-		<div class="chat-form">
-            <div id="output"></div>
-			<input class="chat-input" type="text" id="chat-input" placeholder="Type your message here...">
-			<button id="send" onclick="sendMessage(event)">Send</button>
-		</div>
-	</div>
+
+    <div class="container main">
+        <div class="col left">
+            <div id="sidepanel">
+                <div id="profile" style="background: radial-gradient(black, transparent);">
+                    <div class="wrap">
+                        <p id="userName">Groups and Contacts</p>
+                
+                    </div>
+                </div>
+                <div id="contacts">
+              
+                </div>
+                <div id="bottom-bar">
+                    <button id="showMyGroups"><i aria-hidden="true"></i>Show My Groups<span></span></button>
+                    <button id="showGroupMembers"><i aria-hidden="true"></i> <span>Show Group members</span></button>
+                          <button id="addUsers"><i aria-hidden="true"></i> <span>Add Users</span></button>
+                      </div>
+            </div>
+            <div class="content">
+        
+                <div class="contact-profile">
+                    <p id="boxName">Chat App</p>
+                    <div class="social-media">
+                        <i aria-hidden="true" id="exit-chat">Exit</i>
+                    </div>
+                </div>
+                <div class="messages" id="messageBox">
+              <ul id="showPreviousMsg">
+                
+              </ul>
+                    <ul id="userMessage">
+                    </ul>
+              <ul id="newMessages">
+        
+              </ul>
+                </div>
+    
+        </div>
+
+        <div class="col right">
+            <div class="chat-box">
+                <div class="chat-header">  
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#popupModal">Create Group</button>
+                </div>
+                <div class="chat-box"></div>
+                <div class="chat-form">
+                    <div id="output"></div>
+                    <input class="chat-input" type="text" id="chat-input" placeholder="Type your message here...">
+                    <button id="send-message">Send</button>
+                </div>
+            </div>
+    
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div id="popupModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+       <!-- Modal content-->
+       <div class="modal-content">
+            <div class="modal-header">
+               <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+               <h4 class="modal-title">Create Group</h4>
+            </div>
+            <div class="modal-body">
+		       <form id="createGroupForm">
+			   <div class="form-group">
+			       <input type="text" placeholder="Group Name" class="form-control" id="groupName" name="groupName" required>
+			   </div>
+				<button type="submit"  id="creategrp"  class="btn btn-primary">Create</button>
+		        </form>	  
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            <div id="showResponse" style="text-align: center;"></div>
+        </div>
+
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script  src="http://localhost:3000/socket.io/socket.io.js"></script>
 	<script src="chat.js"></script>
 </body>
 </html>
