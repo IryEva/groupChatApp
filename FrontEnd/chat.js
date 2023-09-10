@@ -6,6 +6,7 @@ const message = document.getElementById('chat-input');
 const chatsCanStored = 1000;
 const showGroups = document.getElementById('showMyGroups');
 const addUsers = document.getElementById('addUsers');
+const showGroupMembers = document.getElementById('showGroupMembers');
 
 sendMessage.addEventListener('click', () => {
     if(message.value !== '') {
@@ -201,6 +202,109 @@ showGroups.addEventListener('click', async() => {
 
 })  
 
+showGroupMembers.addEventListener('click', async () => {
+    const groupDetails = JSON.parse(localStorage.getItem('groupDetails'))
+    showGroupUserListTitle()
+    const res = await axios.get(`http://localhost:3000/user/members/${groupDetails.id}`);
+    const listOfGroupMembers = res.data.usersDetails
+    const userGroupDetails = res.data.userGroup; 
+    for(let i=0, j=0; i<listOfGroupMembers.length, j<userGroupDetails.length; i++,j++) {
+        showGroupUsersOnScreen(listOfGroupMembers[i], userGroupDetails[j])
+    }
+})
+
+const showGroupUsersOnScreen = (users,userGroup) => {
+    const groupDetails = JSON.parse(localStorage.getItem('groupDetails'));
+    const token = localStorage.getItem('token');
+    const decodeToken = parseJwt(token);
+
+    const userLists1 = document.getElementById('userLists');
+
+    const li = document.createElement('div');
+    li.className = 'contact';
+
+    const div = document.createElement('div');
+    div.className = 'wrap';
+    li.append(div);
+
+    const p = document.createElement('p');
+    p.textContent = users.name;
+
+    const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
+    const removeUser = document.createElement('button');
+    removeUser.className = 'button-45'
+    const makeAdmin = document.createElement('button');
+    makeAdmin.className = 'button-29'
+    const leaveGroup = document.createElement('button')
+    leaveGroup.className = 'button-62'
+
+    if(userGroup.isAdmin) {
+        p.textContent = users.name + ' Group Admin'
+        p.style.color = 'black';
+    }
+
+    if(users.id === decodeToken.userId) {
+        leaveGroup.innerHTML = `Leave`;
+        p.append(leaveGroup)
+        const userGroupId = userGroup.id;
+        leaveUserGroup(leaveGroup, userGroupId, li);
+    }
+
+    if(isAdmin) {
+
+        removeUser.innerHTML = `remove`;
+        makeAdmin.innerHTML = `Make Admin`
+        p.append(removeUser)
+        p.append(makeAdmin)
+    
+        if(users.id === decodeToken.userId) {
+            removeUser.remove()
+            makeAdmin.remove()
+        }
+
+        if(userGroup.isAdmin) {
+            removeUser.remove()
+            makeAdmin.remove()
+        }
+
+        removeUser.addEventListener('click', async() => {
+            const userGroupId = userGroup.id;
+            const res = await axios.delete(`http://localhost:3000/user/remove/${userGroupId}`); 
+            if(res.status === 200) {
+                li.remove();
+                alert(`You Successfully removed ${users.name} from ${groupDetails.name}`)
+            }
+        })
+    
+        makeAdmin.addEventListener('click', async() => {
+            const userGroupId = userGroup.id;
+            const res = await axios.post(`http://localhost:3000/user/admin/${userGroupId}`); 
+            if(res.status === 202) {
+                makeAdmin.remove();
+                removeUser.remove();
+                alert(`You Successfully Made ${users.name} Admin of ${groupDetails.groupName}`);
+            }
+        })
+        }
+        
+        div.append(p)
+        userLists1.append(li)
+    }
+    
+    const leaveUserGroup = (leaveGroup, userGroupId, li) => {
+        const groupDetails = JSON.parse(localStorage.getItem('groupDetails'))
+        leaveGroup.addEventListener('click',async() => {
+            const res = await axios.delete(`http://localhost:3000/user/remove/${userGroupId}`);
+            if(res.status === 200) {
+                li.remove();
+                alert(`You Successfully leaved ${groupDetails.name}`)
+                localStorage.removeItem('groupDetails');
+                window.location.reload();
+            }
+        })
+    }
+    
+
 const showGroupsOnScreen = (groups, userGroup) => {
     const groupLists = document.getElementById('groupLists');
 
@@ -383,6 +487,31 @@ const showUserListTitle = () => {
         userLists.remove();
         // document.getElementById('search').hidden = true;
     })
+}
+
+const showGroupUserListTitle = () => {
+    const contacts = document.getElementById('contacts')
+    const userLists = document.createElement('ul');
+    userLists.id = 'userLists';
+    const userListsLi = document.createElement('li');
+    userListsLi.className = 'contact';
+    userLists.append(userListsLi);
+    const userListsDiv = document.createElement('div');
+    userListsDiv.className = 'wrap';
+    userListsLi.append(userListsDiv);
+    const userListH3 = document.createElement('h3');
+    userListsDiv.append(userListH3)
+    userListH3.style.fontWeight = 'bold';
+    userListH3.textContent = `Group Members`;
+    userListH3.id = 'userListTitle'
+    const closebtn = document.createElement('button');
+    userListH3.append(closebtn)
+    closebtn.innerHTML = 'close';
+    closebtn.className = 'button-17'
+    contacts.append(userLists)
+    closebtn.onclick = () => {
+        userLists.remove();
+    }
 }
 
 function showErrorMsg(errorMsg) {

@@ -71,8 +71,65 @@ const addUserToGroup = async(req, res) => {
     }
 } 
 
+const getGroupMembers =  async(req,res) => {
+    try{
+
+        const { groupId } = req.params;
+        const usersDetails = [];
+        const userGroup = await UserGroup.findAll({where: {groupId}});
+        for(let i=0; i<userGroup.length; i++) {
+            let userId = userGroup[i].dataValues.userId;
+            const user = await User.findByPk(userId)
+            usersDetails.push(user)
+        }
+        res.status(201).json({ usersDetails, userGroup });
+
+    }catch(error){
+        console.log(error);
+    }
+}
+
+const updateIsAdmin = async(req,res) => {
+    const t = await sequelize.transaction();
+    try{
+        const userGroupId = req.params.userGroupId;
+        
+        const userGroup = await UserGroup.findOne({ where:{id: userGroupId } });
+
+        const updateAdmin = await userGroup.update({ isAdmin: true }, { transaction:t });
+
+        await t.commit();
+        res.status(202).json({ updateAdmin , message: `Successfully made Admin of Group`});
+
+    }catch(error){
+        await t.rollback();
+        console.log(err);
+        res.status(500).json({ error: `Internal Server Error` });
+    }
+}
+
+const deleteGroupMember = async(req,res) => {
+    const t = await sequelize.transaction();
+    try {
+        const { id } = req.params;
+        
+        const userGroup = await UserGroup.destroy({ where:{ id } }, { transaction: t});
+
+        await t.commit();
+        res.status(200).json({ userGroup , message: `Successfully removed group member`})
+    } catch(err) {
+        await t.rollback();
+        console.log(err);
+        res.status(500).json({ error: `Internal Server Error` });
+    }
+}
+
 module.exports= {
     addGroup,
     getGroup,
-    addUserToGroup
+    addUserToGroup,
+    getGroupMembers,
+    updateIsAdmin,
+    deleteGroupMember
+
 }

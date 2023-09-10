@@ -11,4 +11,11 @@ router.get('/get-group',auth.authenticate,groupController.getGroup);
 
 router.post('/add/:userId/:groupId', groupController.addUserToGroup);
 
+router.get('/members/:groupId', groupController.getGroupMembers);
+
+router.post('/admin/:userGroupId', groupController.updateIsAdmin);
+
+router.delete('/remove/:id', groupController.deleteGroupMember);
+
+
 module.exports = router;
