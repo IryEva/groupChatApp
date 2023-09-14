@@ -19,6 +19,8 @@ const io = require('socket.io')(server,{
     origin: "*"
   }
 });
+const multer = require('multer');
+const upload = multer();
 
 const port = process.env.PORT || 3000
 
@@ -38,11 +40,13 @@ const UserGroup = require('./BackEnd/models/userGroup');
 const userRoutes = require('./BackEnd/routes/user'); 
 const msgRoutes = require('./BackEnd/routes/message');
 const groupRoutes = require('./BackEnd/routes/group');
+const mediaRoutes = require('./BackEnd/routes/media');
 
 
 app.use('/user', userRoutes);
 app.use('/user',msgRoutes );
 app.use('/user',groupRoutes);
+app.use('/media', upload.single('userFile'),mediaRoutes);
 app.use(express.json());
 //app.use(express.static(path.join(__dirname, 'public'))); 
 

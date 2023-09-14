@@ -14,9 +14,10 @@ async function signup() {
         } 
     
       console.log(signupDetails)
-      const response = await axios.post("http://localhost:3000/user/signup",signupDetails)
+      const response = await axios.post("http://localhost:3000/user/signup",signupDetails);
+      console.log(response);
       if(response.status === 201) {
-        window.location.href = "../groupChatApp/FrontEnd/login.html"
+        window.location.href = "../FrontEnd/login.html"
  
       } else {
         throw new Error('Failed to login')
@@ -29,3 +30,5 @@ async function signup() {
  
     }
   }
+
+  // background-color: rgb(99, 67, 114);

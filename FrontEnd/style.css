@@ -10,7 +10,7 @@ body {
   }
 
   #output {
-    height: 200px;
+    height: 400px;
     overflow-y: scroll;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -21,22 +21,121 @@ body {
     width: 88%;
     padding: 10px;
     border: 1px solid #ccc;
-    text-align: center;
+    text-align: right;
   }
 
   #send {
     width: 10%;
     padding: 10px;
     border: none;
-    background-color: darkgreen;
+    background-color: rgb(99, 67, 114);
     color: #fff;
     cursor: pointer;
   }
 
   .chat-header {
-    background-color: darkgreen;
+    background-color: rgb(99, 67, 114);
     color: white;
     padding: 20px;
     text-align: center;
     font-size: 16px;
   }
+
+  
+  .main{
+    display: flex;
+    flex-direction: row;
+    max-height: 50%;
+    height: 100vh;
+}
+
+.right{
+  text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 100%;
+}
+
+.left{
+  text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+
+height: 100%;
+background-color: rgb(99, 67, 114);
+color: white;
+}
+
+
+.button-ok {
+  background-color: darkred;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-ma {
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-33 {
+  background-color: darkgreen;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+
+.button-17 {
+  background-color: darkslategray;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-re {
+  background-color: darkred;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+#send-button{
+  background-color: rgb(99, 67, 114);
+  color: white;
+}
+
+.btn-grp {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-members {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-add {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}

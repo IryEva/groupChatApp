@@ -3,65 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"  content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <title>Register</title>
-    <style>
-        input[type="email"], input[type="password"] {
-            border: 1px solid #ccc;
-            background-color: hsl(0, 0%, 100%);
-            padding: 8px;
-            margin-bottom: 10px;
-            margin : auto;
-        }
-        form {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-            
-         
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    
-    <div class="container d-flex justify-content-center align-items-center h-100">
-            <div class="card">
-                <div class="card-body">
-                    <form id="login-form" onsubmit="signup()" >
-                        <p class="text-center">Existing User? <a href="../FrontEnd/login.html" id="login-link">Login</a></p>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="name"  id="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" id="password" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone no</label>
-                            <input type="number" name="phone" id="phonenumber" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-dark" id = 'submit'>Sign Up</button>
-                    </form>
-            
+    <div class="container main">
+        <!-- <div class="row"> -->
+            <div class="col left" >
+                <div class="height">
+                    <div class="hileft">
+                        <span><h3> Welcome </h3></span>
+                    </div> 
+                    <div class="continue">
+                        <h6 >Sign in to continue...</h6>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-    <ul id="items" class="list-group" >
-    </ul>
-    
+            <div class="col right">
+                <form id="login-form" class="margin-left" onsubmit="signup()" >
+                    <p class="text-center">Existing User? <a href="../FrontEnd/login.html" id="login-link">Login</a></p>
+                    <div class="form-group">
+                        <input type="name" placeholder="Name?" id="name"  class="form-control mol-2" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email?" name="email" id="email" class="form-control mol-2" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="password" placeholder="Password?" name="password" id="password" class="form-control mol-2" required>
+                    </div><div class="form-group">
+                        <input type="number" placeholder="Phone no:" name="phone" id="phonenumber" class="form-control mol-2" required>
+                    </div>
+                    <div class=button>
+                        <Button type="submit" class="btn btn-primary">Sign in</Button>
+                    </div>  
+                
+                </form>
+            </div>
+            <!-- </div> -->
+    </div>
+        
+           
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
-    <script src="./signUp.js"></script>
-    </body>
-    </html>
+<ul id="items" class="list-group" >
+</ul>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
+<script src="./signUp.js"></script>
+</body>
+</html>
+               

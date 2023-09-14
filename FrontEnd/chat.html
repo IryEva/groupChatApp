@@ -30,15 +30,16 @@
               
                 </div>
                 <div id="bottom-bar">
-                    <button id="showMyGroups"><i aria-hidden="true"></i>Show My Groups<span></span></button>
-                    <button id="showGroupMembers"><i aria-hidden="true"></i> <span>Show Group members</span></button>
-                          <button id="addUsers"><i aria-hidden="true"></i> <span>Add Users</span></button>
-                      </div>
+                    <button class="btn-grp" id="showMyGroups"><i aria-hidden="true"></i>My Groups<span></span></button>
+                    <button class="btn-members" id="showGroupMembers"><i aria-hidden="true"></i> <span>Group members</span></button>
+                    <button class="btn-add" id="addUsers"><i aria-hidden="true"></i> <span>Add Users</span></button>
+                </div>
             </div>
-            <div class="content">
+            <div class="content">  
         
                 <div class="contact-profile">
-                    <p id="boxName">Chat App</p>
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#popupModal">Create Group</button>
+                    <!--<p id="boxName">Chat App</p>-->
                     <div class="social-media">
                         <i aria-hidden="true" id="exit-chat">Exit</i>
                     </div>
@@ -53,25 +54,27 @@
         
               </ul>
                 </div>
-    
-        </div>
+            </div>
+        </div>    
 
         <div class="col right">
             <div class="chat-box">
                 <div class="chat-header">  
-                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#popupModal">Create Group</button>
+                    <!--<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#popupModal">Create Group</button>-->
+                    <h2 id="boxName">Chat App</h2>
                 </div>
                 <div class="chat-box"></div>
                 <div class="chat-form">
                     <div id="output"></div>
                     <input class="chat-input" type="text" id="chat-input" placeholder="Type your message here...">
-                    <button id="send-message">Send</button>
+                    <button class="send-button" id="send-message">Send</button>
+                    <input class="fileInput" id="send-media" style="background: #b2d4f5;" type="file"></input>
                 </div>
             </div>
     
         </div>
-
-    </div>
+    
+    </div> </div>
 
 
     <!-- Modal -->

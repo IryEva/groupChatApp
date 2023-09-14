@@ -7,6 +7,7 @@ const chatsCanStored = 1000;
 const showGroups = document.getElementById('showMyGroups');
 const addUsers = document.getElementById('addUsers');
 const showGroupMembers = document.getElementById('showGroupMembers');
+const sendMedia = document.getElementById('send-media');
 
 sendMessage.addEventListener('click', () => {
     if(message.value !== '') {
@@ -154,13 +155,7 @@ function parseJwt (token) {
 
 async function getMessage(){ 
     try{
-        const showPrevMsgs = document.getElementById('showPreviousMsg')
-        showPrevMsgs.style.textAlign = 'center';
-        const button = document.createElement('button');
-        showPrevMsgs.append(button)
-        button.innerHTML = `Show Previous messages`;
-        button.className = 'button-18';
-        button.onclick = async () => {
+        const showPrevMsgs = document.getElementById('showPreviousMsg');
             //Getting messages from get req
             const response = await axios.get(`http://localhost:3000/user/get-message/${groupId}`,)
             let lastestChats = response.data.message;
@@ -174,7 +169,7 @@ async function getMessage(){
                 alert(response.data.message)
                 showPrevMsgs.remove()
             }
-        }
+        //}
         // const response = await axios.get(`http://localhost:3000/user/get-message/${groupId}`, {
         //     headers: {" Authorization": token }});
        
@@ -232,11 +227,11 @@ const showGroupUsersOnScreen = (users,userGroup) => {
 
     const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
     const removeUser = document.createElement('button');
-    removeUser.className = 'button-45'
+    removeUser.className = 'button-re';
     const makeAdmin = document.createElement('button');
-    makeAdmin.className = 'button-29'
+    makeAdmin.className = 'button-ma';
     const leaveGroup = document.createElement('button')
-    leaveGroup.className = 'button-62'
+    leaveGroup.className = 'button-ok';
 
     if(userGroup.isAdmin) {
         p.textContent = users.name + ' Group Admin'
@@ -254,7 +249,7 @@ const showGroupUsersOnScreen = (users,userGroup) => {
 
         removeUser.innerHTML = `remove`;
         makeAdmin.innerHTML = `Make Admin`
-        p.append(removeUser)
+        p.append(removeUser) 
         p.append(makeAdmin)
     
         if(users.id === decodeToken.userId) {
@@ -272,7 +267,7 @@ const showGroupUsersOnScreen = (users,userGroup) => {
             const res = await axios.delete(`http://localhost:3000/user/remove/${userGroupId}`); 
             if(res.status === 200) {
                 li.remove();
-                alert(`You Successfully removed ${users.name} from ${groupDetails.name}`)
+                alert(`You Successfully removed ${users.name} from ${groupDetails.groupName}`)
             }
         })
     
@@ -322,8 +317,10 @@ const showGroupsOnScreen = (groups, userGroup) => {
     li.append(div);
 
     const p = document.createElement('p');
+    p.className = 'pointer';
     p.textContent = groups.groupName;
     p.id = groups.id;
+    p.style.cursor = 'pointer';
 
     div.append(p)
     groupLists.append(li)
@@ -375,7 +372,7 @@ const groupButton = document.getElementById('creategrp');
     const userListsDiv = document.createElement('div');
     userListsDiv.className = 'wrap';
     userListsLi.append(userListsDiv);
-    const userListH3 = document.createElement('h3');
+    const userListH3 = document.createElement('h4');
     userListsDiv.append(userListH3)
     userListH3.style.fontWeight = 'bold';
     userListH3.textContent = `My Groups`;
@@ -438,7 +435,7 @@ const showUsersOnScreen = (users) => {
             button.value = 'Add to Your group';
             button.className = 'button-33'
             button.type = 'button';
-            p.append(button)
+            p.appendChild(button)
     
             const groupId = groupData.id;
             const toUserId = users.id;
@@ -473,7 +470,7 @@ const showUserListTitle = () => {
     const userListsDiv = document.createElement('div');
     userListsDiv.className = 'wrap';
     userListsLi.append(userListsDiv);
-    const userListH3 = document.createElement('h3');
+    const userListH3 = document.createElement('h4');
     userListsDiv.append(userListH3)
     userListH3.style.fontWeight = 'bold';
     userListH3.textContent = `List of Contacts`;
@@ -493,13 +490,13 @@ const showGroupUserListTitle = () => {
     const contacts = document.getElementById('contacts')
     const userLists = document.createElement('ul');
     userLists.id = 'userLists';
-    const userListsLi = document.createElement('li');
+    const userListsLi = document.createElement('li'); 
     userListsLi.className = 'contact';
     userLists.append(userListsLi);
     const userListsDiv = document.createElement('div');
     userListsDiv.className = 'wrap';
     userListsLi.append(userListsDiv);
-    const userListH3 = document.createElement('h3');
+    const userListH3 = document.createElement('h4');
     userListsDiv.append(userListH3)
     userListH3.style.fontWeight = 'bold';
     userListH3.textContent = `Group Members`;
@@ -514,8 +511,38 @@ const showGroupUserListTitle = () => {
     }
 }
 
+sendMedia.addEventListener('input', uploadFile)
+
+async function uploadFile(e) {
+    try {
+        const token = localStorage.getItem('token');
+        const groupDetails = JSON.parse(localStorage.getItem('groupDetails'));
+        const groupId = groupDetails.id;
+        const file = e.target.files[0];
+        const form = new FormData();
+        form.append('userFile', file);
+        
+        const response = await axios.post(`http://localhost:3000/media/file/${groupId}`, form,
+        {headers:{'Authorization':token ,'Content-Type': 'multipart/form-data'}})
+        
+        const fileData = response.data.files;
+        showUsersChatsOnScreen(response.data.files)
+        socket.emit('send-message', response.data.files);
+
+        console.log('the file obj is ', fileData);
+        
+        // Storing media file url to local storage
+        let usersChats = JSON.parse(localStorage.getItem('usersChats')) || [];
+        usersChats.push(response.data.files)
+        let chats = usersChats.slice(usersChats.length - chatsCanStored);
+        localStorage.setItem('usersChats', JSON.stringify(chats));
+    } catch(err) {
+        console.log(err);
+    }
+}
+
 function showErrorMsg(errorMsg) {
-    Swal.fire({
+     console.log({
         icon: 'error',
         title: 'Oops...',
         text: errorMsg
