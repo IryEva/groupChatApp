@@ -2,7 +2,7 @@ const path = require('path');
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser'); //parse request body and make it available in req.body object
-
+const cron = require('node-cron');
 //const errorController = require('./controllers/error');
 
 const fs = require('fs');  
@@ -35,6 +35,7 @@ const User = require('./BackEnd/models/user');
 const Message = require('./BackEnd/models/message');
 const Group = require('./BackEnd/models/group');
 const UserGroup = require('./BackEnd/models/userGroup');
+const ArchivedChats = require('./BackEnd/models/ArchivedChat');
 
 
 const userRoutes = require('./BackEnd/routes/user'); 
@@ -59,6 +60,11 @@ Message.belongsTo(Group);
 User.belongsToMany(Group, { through: UserGroup });
 Group.belongsToMany(User, { through: UserGroup });
 
+// Users and archived chats relation
+User.hasMany(ArchivedChats);
+// Groups and archied chats relation
+Group.hasMany(ArchivedChats);
+
 io.on("connect", (socket) => {
 
   socket.on('user', () => {
@@ -78,6 +84,22 @@ io.on("connect", (socket) => {
   })
 });
 
+cron.schedule('0 0 * * *', async () => {
+  //running every day 
+  try{
+      const chats = await Message.findAll();
+
+      for(let chat of chats) {
+          await ArchivedChats.create({ message: chat.textmessage, sender: chat.name, groupId: chat.groupId, 
+          userId: chat.userId });
+          console.log('old chats are stored to archieved table');
+          await Message.destroy({ where:{id:chat.id} });
+          console.log('chats in the chats table are deleted');
+      }
+  } catch(err) {
+      console.log(err);
+  }
+})
 
 sequelize.sync().then(result => {
   server.listen(3000);

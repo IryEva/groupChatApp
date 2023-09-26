@@ -1,5 +1,5 @@
 const Message = require('../models/message');
-const S3service = require('../services/S3services'); 
+const s3service = require('../services/s3services'); 
 
 const postMediaFile = async(req, res) => {
     try {
@@ -9,7 +9,7 @@ const postMediaFile = async(req, res) => {
         const file = req.file.buffer;
         const fileName = `${userId} ${req.file.originalname}`;
 
-        const fileUrl = await S3service.uploadToS3(file, fileName);
+        const fileUrl = await s3service.uploadToS3(file, fileName);
 
         const postFile = await Message.create({ message: fileUrl, sender: name, groupId:Number(groupId), userId});
         
